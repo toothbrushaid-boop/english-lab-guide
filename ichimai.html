@@ -1,0 +1,63 @@
+<title>English Lab 1枚案内</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@700&family=Noto+Sans+JP:wght@400;700&display=swap">
+<style>
+  :root { --bg:#fbfaf6; --paper:#fff; --ink:#22302e; --ink-2:#5d6d69; --line:#e2ded2; --accent:#1c6b5a; --accent-soft:#e4f0ec; --gold:#a9771e; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#171d1c; --paper:#1f2726; --ink:#ebeee9; --ink-2:#a5b2ad; --line:#36423f; --accent:#6fc3ad; --accent-soft:#1b3630; --gold:#e0b35c; } }
+  :root[data-theme="dark"] { --bg:#171d1c; --paper:#1f2726; --ink:#ebeee9; --ink-2:#a5b2ad; --line:#36423f; --accent:#6fc3ad; --accent-soft:#1b3630; --gold:#e0b35c; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:"Noto Sans JP","Hiragino Sans",system-ui,sans-serif; font-size:17px; line-height:1.85; }
+  a { color:var(--accent); text-underline-offset:3px; }
+  a:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  main { max-width:640px; margin:0 auto; padding:48px 20px 72px; }
+  .eyebrow { color:var(--gold); font-size:13px; letter-spacing:.14em; font-weight:700; }
+  h1 { font-family:"Shippori Mincho","Hiragino Mincho ProN",serif; font-size:clamp(26px,5vw,34px); line-height:1.3; margin:8px 0 18px; text-wrap:balance; }
+  h2 { font-size:15px; color:var(--gold); letter-spacing:.12em; margin:30px 0 6px; }
+  p { margin:8px 0; }
+  ol, ul { padding-left:22px; margin:6px 0; } li { margin:6px 0; }
+  .box { background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:14px 18px; }
+  .do { background:var(--accent-soft); border-radius:10px; padding:10px 14px; margin-top:14px; }
+  .do b { color:var(--accent); }
+  .foot { margin-top:36px; color:var(--ink-2); font-size:14px; }
+</style>
+
+<main>
+  <div class="eyebrow">English Lab ― 1 枚案内　版 001（2026-10-28）</div>
+  <h1>自分専用の英語学習アプリを、AI と作る</h1>
+  <p>プログラムは一行も書いていません。自分がしたのは、ログインと、スマホで触って「ここが変」と言うことだけです。私は歯科医師ですが、どんな仕事でも同じ作りで動きます。</p>
+
+  <h2>何をしてくれるか</h2>
+  <div class="box"><ul>
+    <li><strong>集める</strong>：自分の仕事に関わる YouTube 動画と記事（学術分野なら論文）を、毎週 AI が探して採点し、合格だけ届く</li>
+    <li><strong>抜き出す</strong>：その字幕と要旨から、現場で口にする英文と単語を作る（和訳・発音記号つき）</li>
+    <li><strong>練習する</strong>：ドリル・発音評価つきシャドーイング・忘れたころの復習・車で聞く音声</li>
+    <li><strong>話す</strong>：自分の場面（学会・展示会・商談・接客・交流会）を AI 相手に声で練習。言えなかった表現が自動で単語帳に入る</li>
+  </ul></div>
+
+  <h2>使ったもの</h2>
+  <div class="box"><ol>
+    <li><a href="https://claude.ai" target="_blank" rel="noopener">Claude</a>（話し相手。有料プラン）</li>
+    <li><a href="https://claude.com/product/claude-code" target="_blank" rel="noopener">Claude Code</a>（パソコンの中でアプリを組む係。同じ契約で使える。有料プランが要る）</li>
+    <li>置き場所は Vercel・Supabase・GitHub の無料枠。設定は AI がやり、自分はログインだけ</li>
+  </ol></div>
+
+  <h2>頼んだ順番</h2>
+  <div class="box"><ol>
+    <li>Claude に「私は〔仕事〕です。〔学会／展示会／商談／接客〕で使う英語表現を 20 個」と頼み、自分の分野を扱えるか見る</li>
+    <li>「自分だけが使う英語学習アプリの設計書を、専門用語なしで書いて」</li>
+    <li>Claude Code に設計書を渡して「作って、スマホで使える形で公開して。本番に出す前に必ず私に確認して」</li>
+    <li>使って不満を言う。「言えなかった表現を自動で単語帳に入れて」のように。全部あとから足せる</li>
+  </ol>
+  <div class="do"><b>最初の一歩：</b>Claude のアプリを入れて、1 の文を貼る。それだけです。</div></div>
+
+  <h2>これだけ守る</h2>
+  <div class="box"><ul>
+    <li>「できる？」ではなく「やって」と言う</li>
+    <li>自分の手を使うのは、ログイン・支払い・実機で試す・最終判断の 4 つだけ</li>
+    <li>「動きました」は信じず、自分のスマホで触ってから本番に出す</li>
+  </ul></div>
+
+  <h2>お金</h2>
+  <p>Claude の有料プラン（月 20〜200 ドル）＋アプリの AI 部品が使った分だけ月数百円。置き場所は 0 円。</p>
+
+  <p class="foot">くわしい版は <a href="index.html">English Lab の作り方</a>。公式の説明は <a href="https://code.claude.com/docs/ja/overview" target="_blank" rel="noopener">Claude Code 公式ドキュメント（日本語）</a>。分からなかった所を教えていただければ書き足します。患者さんの情報は入れていません。</p>
+</main>

@@ -1,0 +1,179 @@
+<title>English Lab 困ったときの手引き</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<style>
+  :root { --bg:#fbfaf6; --paper:#fff; --ink:#22302e; --ink-2:#5d6d69; --line:#e2ded2; --accent:#1c6b5a; --accent-soft:#e4f0ec; --gold:#a9771e; --gold-soft:#f6efdf; --note:#f3f1ea; --ok:#1d6b35; --ok-soft:#e4f3e8; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#171d1c; --paper:#1f2726; --ink:#ebeee9; --ink-2:#a5b2ad; --line:#36423f; --accent:#6fc3ad; --accent-soft:#1b3630; --gold:#e0b35c; --gold-soft:#3a3020; --note:#262e2c; --ok:#8fd4a3; --ok-soft:#173622; } }
+  :root[data-theme="dark"] { --bg:#171d1c; --paper:#1f2726; --ink:#ebeee9; --ink-2:#a5b2ad; --line:#36423f; --accent:#6fc3ad; --accent-soft:#1b3630; --gold:#e0b35c; --gold-soft:#3a3020; --note:#262e2c; --ok:#8fd4a3; --ok-soft:#173622; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:"Noto Sans JP","Hiragino Sans",system-ui,sans-serif; font-size:16.5px; line-height:1.85; }
+  a { color:var(--accent); text-underline-offset:3px; }
+  a:focus-visible, summary:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  header { padding:48px 20px 28px; border-bottom:1px solid var(--line); background:var(--paper); }
+  .wrap { max-width:720px; margin:0 auto; }
+  .eyebrow { color:var(--gold); font-size:13px; letter-spacing:.14em; font-weight:700; }
+  h1 { font-family:"Shippori Mincho","Hiragino Mincho ProN",serif; font-size:clamp(26px,5vw,36px); line-height:1.3; margin:10px 0 12px; text-wrap:balance; }
+  .lead { font-size:17px; color:var(--ink-2); margin:0; }
+  main { padding:8px 20px 80px; }
+  nav.toc { background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:12px 18px; margin:18px 0 8px; font-size:15px; }
+  nav.toc ol { margin:4px 0; padding-left:22px; columns:2; column-gap:24px; } nav.toc li { margin:2px 0; break-inside:avoid; }
+  h2 { font-family:"Shippori Mincho",serif; font-size:23px; margin:46px 0 8px; padding-top:16px; border-top:1px solid var(--line); }
+  h2 small { display:block; font-family:"Noto Sans JP",sans-serif; font-size:13px; color:var(--gold); letter-spacing:.12em; font-weight:700; margin-bottom:4px; }
+  p { margin:10px 0; max-width:42em; }
+  .tw { overflow-x:auto; border:1px solid var(--line); border-radius:12px; margin:14px 0; background:var(--paper); }
+  table { border-collapse:collapse; width:100%; font-size:15px; }
+  th, td { text-align:left; padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { background:var(--accent-soft); white-space:nowrap; }
+  tr:last-child td { border-bottom:0; }
+  .ok { background:var(--ok-soft); border-left:4px solid var(--ok); border-radius:0 10px 10px 0; padding:8px 16px; margin:12px 0; }
+  .ok b { color:var(--ok); }
+  .say { background:var(--accent-soft); border-radius:10px; padding:8px 14px; margin:8px 0; font-size:15px; }
+  .say b { color:var(--accent); }
+  ul, ol { padding-left:22px; } li { margin:5px 0; }
+  code { font-family:ui-monospace, Menlo, monospace; font-size:14px; background:var(--note); padding:1px 6px; border-radius:6px; }
+  .foot { margin-top:48px; padding-top:16px; border-top:1px solid var(--line); color:var(--ink-2); font-size:14px; }
+</style>
+
+<header><div class="wrap">
+  <div class="eyebrow">English Lab ― 困ったときの手引き　版 001（2026-10-28）</div>
+  <h1>止まったとき、壊れたと思ったときに開くページ</h1>
+  <p class="lead">AI と作っていると、必ず何度か止まります。その大半は「壊れた」のではなく「人の手が要る場面」か「言葉ひとつで動く場面」です。この手引きは、その見分け方と、言う言葉を集めたものです。</p>
+</div></header>
+
+<main class="wrap">
+
+  <nav class="toc"><strong>目次</strong><ol>
+    <li><a href="#s1">はじめる前に揃えるもの</a></li>
+    <li><a href="#s2">Claude Code の入れ方</a></li>
+    <li><a href="#s3">これは壊れていない</a></li>
+    <li><a href="#s4">人の手が要る 8 つの場面</a></li>
+    <li><a href="#s5">鍵の貼り方</a></li>
+    <li><a href="#s6">赤い字が出たら</a></li>
+    <li><a href="#s7">Windows の早見表</a></li>
+    <li><a href="#s8">Mac の早見表</a></li>
+    <li><a href="#s9">アプリの早見表</a></li>
+    <li><a href="#s10">お金の見張り方</a></li>
+    <li><a href="#s11">会話が長くなったら</a></li>
+    <li><a href="#s12">人に聞く前に</a></li>
+  </ol></nav>
+
+  <h2 id="s1"><small>1</small>はじめる前に揃えるもの</h2>
+  <ul>
+    <li><strong>Claude の有料プラン</strong>（月 20〜200 ドル）。無料プランでは作る係（Claude Code）が使えません</li>
+    <li><strong>パソコン</strong>：Mac か Windows。ここ数年のものなら足ります</li>
+    <li><strong>スマホ</strong>：iPhone か Android。どちらでも同じアプリになります</li>
+    <li><strong>クレジットカード 1 枚</strong>：会話の AI（OpenAI）の前払いと、発音評価（Azure）の登録に使います。どちらも使った分だけで、月数百円が目安</li>
+    <li><strong>メールアドレス</strong>：登録が 5 つほどあります（GitHub・Vercel・Supabase・OpenAI・Azure）。全部同じアドレスで構いません</li>
+    <li><strong>紙とペン</strong>：途中で「自分で決めるパスワード」が 1 つ出ます（データベース用）。紙に書いて、無くさない所へ</li>
+  </ul>
+
+  <h2 id="s2"><small>2</small>Claude Code の入れ方（黒い画面は使いません）</h2>
+  <ol>
+    <li><a href="https://claude.ai/download" target="_blank" rel="noopener">Claude のデスクトップアプリ</a>を入れて、いつものアカウントでサインインする</li>
+    <li>左の列にある <strong>「Code」</strong> のタブを開く。これが「作る係」です</li>
+    <li>「フォルダを選ぶ」と聞かれたら、<strong>自分の名前のフォルダの直下に「EnglishLab」という新しいフォルダを作って</strong>選ぶ。デスクトップや「書類」の中は避けてください（iCloud や OneDrive が同期して、動きが重くなります）</li>
+    <li>「このフォルダを信頼しますか」と出たら <strong>「はい」</strong></li>
+    <li>入力欄の近くにある <strong>モード</strong>の表示を「Accept edits（編集を許可）」にする。これで、ファイルを作るたびに聞かれなくなります。消す・送る・お金がかかる操作は、この設定でも必ず聞いてきます</li>
+    <li>案内ページの「指示文」をコピーして、入力欄に貼る。〔　〕を自分のことに書き換えて送る</li>
+  </ol>
+
+  <h2 id="s3"><small>3</small>これは壊れていない（よく出る 7 つ）</h2>
+  <div class="ok"><b>許可を求める画面が出る</b><br>AI がファイルを作る・コマンドを動かす前の確認です。読んで「Yes（はい）」。危ないものは AI が先に止める約束になっています</div>
+  <div class="ok"><b>ブラウザが勝手に開いて、ログインを求める</b><br>GitHub・Vercel・Supabase などへのログインです。ここだけは人の手が要ります。ログインして、画面に「You can close this window」や「Authorize」が出たら押し、Claude Code に戻って「できました」と書く</div>
+  <div class="ok"><b>黒い画面で「Password:」と出て、打っても何も表示されない</b><br>Mac のログインパスワードを求めています。打っても文字は出ません。そのまま打って return</div>
+  <div class="ok"><b>「上限に達しました。○時に再開できます」</b><br>Claude の有料プランの時間あたりの枠です。待てば戻ります。その間に別のことをしてください</div>
+  <div class="ok"><b>Mac で「コマンドラインツールをインストールしますか」</b><br>「インストール」を押す。5〜15 分かかります。終わったら Claude Code に「入りました」と書く</div>
+  <div class="ok"><b>Windows で「アクセスを許可しますか」（青い画面）や「ユーザー アカウント制御」</b><br>「許可」「はい」を押す。道具を入れるときに出ます</div>
+  <div class="ok"><b>AI が同じことを 2 回聞いてくる・前の話を忘れている</b><br>会話が長くなったサインです。11 章へ</div>
+
+  <h2 id="s4"><small>4</small>人の手が要る 8 つの場面（出てくる順）</h2>
+  <p>指示文には「ここは私の手が要ります。正常です」と AI が先に言う約束を入れてあります。それでも不安なときのために、画面の見え方を書いておきます。</p>
+  <div class="tw"><table>
+    <tr><th>場面</th><th>何が出るか</th><th>すること</th></tr>
+    <tr><td>GitHub（保管庫）</td><td>登録画面 → メールの確認コード → 2 段階認証の案内。Claude Code からは「8 桁のコードを入れてください」と、入れる先のページ</td><td>登録して、8 桁のコードをそのページに打つ。2 段階認証は「あとで」でも進めます</td></tr>
+    <tr><td>Vercel（公開の置き場所）</td><td>「Continue with GitHub」→ GitHub の許可画面（Vercel にどの保管庫を見せるか）</td><td>GitHub で入り、許可する。Hobby（無料）は個人利用向けです</td></tr>
+    <tr><td>Supabase（データ）</td><td>登録 → 「New project」→ 名前・<strong>データベースのパスワード</strong>・地域</td><td>パスワードは自分で決めて<strong>紙に書く</strong>。地域は Tokyo（Northeast Asia）</td></tr>
+    <tr><td>OpenAI（会話の AI）</td><td>登録 → 電話番号の確認 → 支払い（前払い）→ 「API keys」で鍵を作る。<strong>鍵は 1 回しか表示されません</strong></td><td>数ドル〜 10 ドルを前払い。鍵が出たら、その場で 5 章の方法で渡す</td></tr>
+    <tr><td>Azure（発音の点数）</td><td>Microsoft アカウント → 電話とカードの確認 → 「Speech」のリソースを作る（価格は F0＝無料枠）→ 鍵と地域</td><td>F0 を選ぶ。鍵と地域の名前を 5 章の方法で渡す。F0 のまま使えば 0 円です</td></tr>
+    <tr><td>YouTube Data API（動画を探す鍵）</td><td>Google Cloud の画面で鍵を作る。無料枠の範囲で足ります</td><td>AI が道順を出します。鍵は 5 章の方法で</td></tr>
+    <tr><td>スマホのホーム画面に追加</td><td>iPhone：Safari の「共有」ボタン（□に↑）→「ホーム画面に追加」。Android：Chrome の「︙」→「ホーム画面に追加」</td><td>以後はアプリのように開けます。<strong>iPhone は必ず Safari から</strong></td></tr>
+    <tr><td>マイクの許可</td><td>初めて話す練習を開くと「マイクへのアクセスを許可しますか」</td><td>「許可」。断ってしまったら、スマホの設定 → Safari（または Chrome）→ マイク から直せます</td></tr>
+  </table></div>
+
+  <h2 id="s5"><small>5</small>鍵の貼り方（会話欄に貼らない）</h2>
+  <p>鍵（API キー）は、合言葉のようなものです。会話欄に貼ると記録に残ってしまいます。</p>
+  <ol>
+    <li>Claude Code に「鍵を入れる窓を開いて」と言う。AI が設定ファイル（.env.local）をメモ帳のような窓で開きます</li>
+    <li>鍵をその窓の指定の行に貼って保存する</li>
+    <li>Claude Code に「貼りました」と書く。AI が中身を見ずに「読めた」とだけ確かめます</li>
+  </ol>
+  <div class="say"><b>もし会話欄に貼ってしまったら：</b>「その鍵は無効にして、作り直して」と言い、サービス側で古い鍵を削除する</div>
+
+  <h2 id="s6"><small>6</small>赤い字（エラー）が出たら、3 手順</h2>
+  <ol>
+    <li>赤い字を<strong>全部</strong>選んでコピーする（長くて構いません）</li>
+    <li>Claude Code に貼って、<strong>「直して」</strong>と書く</li>
+    <li>直ったと言われたら <strong>「確かめて」</strong>と書く。AI が実際に動かして確認します</li>
+  </ol>
+  <div class="say"><b>同じエラーが 3 回続いたら：</b>「別の方法で」と言う。1 つの道に固執しているときに効きます</div>
+  <div class="say"><b>何が起きているか分からなくなったら：</b>「いまどこ？」と言う。「ここまで済んだ／次にあなたがすること 1 つ」が返ってきます</div>
+
+  <h2 id="s7"><small>7</small>Windows の早見表</h2>
+  <div class="tw"><table>
+    <tr><th>症状</th><th>意味</th><th>言う言葉</th></tr>
+    <tr><td><code>cannot be loaded because running scripts is disabled</code></td><td>PowerShell が、道具の実行を止めている</td><td>そのまま貼って「直して」。AI が自分の範囲だけ許可に変えます</td></tr>
+    <tr><td><code>'claude' は、内部コマンド…として認識されていません</code></td><td>黒い画面から呼ぼうとしている</td><td>デスクトップアプリの「Code」タブを使う（2 章）</td></tr>
+    <tr><td>Defender の警告・「WindowsによってPCが保護されました」</td><td>入れた道具を Windows が警戒している</td><td>「詳細情報」→「実行」。出どころが AI の案内したものなら進めてよい</td></tr>
+    <tr><td>日本語が「???」や「縺」になる</td><td>文字コードの違い</td><td>「文字化けしている。UTF-8 で直して」</td></tr>
+    <tr><td>作ったフォルダが OneDrive の中にある</td><td>同期で重くなる</td><td>「OneDrive の外に移して」。自分の名前のフォルダ直下へ</td></tr>
+    <tr><td>自分の名前のフォルダが日本語</td><td>一部の道具が日本語のパスで止まることがある</td><td>止まったら「日本語のフォルダ名が原因か確かめて」。別の場所（C:\EnglishLab など）に移す案を AI が出します</td></tr>
+  </table></div>
+
+  <h2 id="s8"><small>8</small>Mac の早見表</h2>
+  <div class="tw"><table>
+    <tr><th>症状</th><th>意味</th><th>言う言葉</th></tr>
+    <tr><td>「コマンドラインツールをインストールしますか」</td><td>最初に 1 回要る部品</td><td>「インストール」を押して待つ（3 章）</td></tr>
+    <tr><td><code>Password:</code> で止まる</td><td>Mac のパスワードを求めている</td><td>打って return（文字は出ません）</td></tr>
+    <tr><td><code>command not found: claude</code></td><td>黒い画面から呼ぼうとしている</td><td>デスクトップアプリの「Code」タブを使う（2 章）</td></tr>
+    <tr><td>作ったフォルダが iCloud Drive の中（デスクトップ・書類）</td><td>同期で重くなる</td><td>「iCloud の外に移して」。自分の名前のフォルダ直下へ</td></tr>
+    <tr><td>「開発元を確認できないため開けません」</td><td>Mac が警戒している</td><td>システム設定 → プライバシーとセキュリティ → 「このまま開く」。AI の案内したものだけ</td></tr>
+  </table></div>
+
+  <h2 id="s9"><small>9</small>アプリの早見表</h2>
+  <div class="tw"><table>
+    <tr><th>症状</th><th>意味</th><th>言う言葉</th></tr>
+    <tr><td>公開した URL を開くと「Application error」</td><td>公開側で落ちている。パソコンでは動いた、がよくある</td><td>「本番のログを見て、原因を直して」</td></tr>
+    <tr><td>動画の字幕が「ありません」と全部に出る</td><td>公開側（クラウド）からは字幕が取れないことが多い。本当に無いとは限らない</td><td>「字幕は私のパソコンで取る方式にして」。指示文にも書いてあります</td></tr>
+    <tr><td>字幕が急に全部失敗するようになった</td><td>短時間に取りすぎて、YouTube に止められた（丸 1 日ほど続く）／字幕の取り方が YouTube 側の変更で壊れた</td><td>「1 日待ってから、もう一度」。それでも駄目なら「別の取り方に切り替えて」</td></tr>
+    <tr><td>アプリが開かない・「Project paused」</td><td>無料のデータベースが、しばらく触らないと眠る</td><td>Supabase の画面で「Restore」を押す。あとで「毎日 1 回読みに行く見張りを入れて」</td></tr>
+    <tr><td>声が録れない・聞き取らない</td><td>マイク許可／iPhone はホーム画面のアプリから開くと動かないことがある</td><td>マイク許可を確認（4 章）。iPhone は Safari で開いて試す</td></tr>
+    <tr><td>長い会話のあと、記録が丸ごと消えた</td><td>講評の文章が長すぎて途中で切れた</td><td>「講評が途中で切れて保存されない。出力を短くして、切れても保存されるようにして」</td></tr>
+    <tr><td>「動きました」と言われたのに、スマホで見ると変わっていない</td><td>公開に数分かかる／別の版を見ている</td><td>3 分待って再読み込み。駄目なら「本番に反映されたか確かめて」</td></tr>
+  </table></div>
+
+  <h2 id="s10"><small>10</small>お金の見張り方</h2>
+  <ul>
+    <li><strong>OpenAI</strong>：前払い式なので、入れた金額以上は使われません。「Billing」の画面で月の上限（Budget）も決められます。場所が分からなければ AI に「OpenAI の月の上限を決める画面への道順を出して」</li>
+    <li><strong>Azure</strong>：Speech を F0（無料枠）で作っていれば 0 円。F0 のままかは「価格レベル」で分かります</li>
+    <li><strong>Claude</strong>：月額固定。時間あたりの枠はありますが、追加料金はありません</li>
+    <li><strong>Vercel・Supabase・GitHub</strong>：無料枠。個人で使う範囲で超えることはまずありません</li>
+    <li>月に一度、AI に <strong>「今月いくら使った？」</strong> と聞く。概算を出してくれます</li>
+  </ul>
+
+  <h2 id="s11"><small>11</small>会話が長くなったら</h2>
+  <p>長い会話は、AI が前の話を忘れたり、動きが遅くなったりします。目安は「同じ説明を 2 回させたとき」です。</p>
+  <ol>
+    <li>いまの会話で「進み具合.md を最新にして」と言う（指示文で、段が終わるたびに書く約束になっています）</li>
+    <li>新しい会話を開く</li>
+    <li>「進み具合.md を読んで、続きをやって」と書く。AI が現在地を読み直して続けます</li>
+  </ol>
+
+  <h2 id="s12"><small>12</small>人に聞く前に</h2>
+  <p>人に聞くときは、次の 2 つを添えると、ひとことで答えが返ってきます。</p>
+  <ul>
+    <li>Claude Code に「いまどこ？」と聞いた答え（コピー）</li>
+    <li>出ている赤い字（コピー）</li>
+  </ul>
+  <p>この手引きに無い止まり方をされたら、それを教えてください。書き足します。</p>
+
+  <p class="foot">案内の本編は <a href="index.html">English Lab の作り方</a>。この手引きは、Claude Code の公式ドキュメント（<a href="https://code.claude.com/docs/ja/overview" target="_blank" rel="noopener">概要</a>・<a href="https://code.claude.com/docs/ja/setup" target="_blank" rel="noopener">導入</a>）と、私自身が半年で踏んだ止まり方をもとに書いています。各サービスの画面は変わることがあるので、見え方が違っていたら AI に「いまの画面はこうなっている」と伝えてください。患者さん・お客様の情報は、どこにも入れない前提です。</p>
+</main>

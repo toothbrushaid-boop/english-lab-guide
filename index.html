@@ -1,0 +1,212 @@
+<title>English Lab の作り方</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<style>
+  :root { --bg:#fbfaf6; --paper:#fff; --ink:#22302e; --ink-2:#5d6d69; --line:#e2ded2; --accent:#1c6b5a; --accent-soft:#e4f0ec; --gold:#a9771e; --gold-soft:#f6efdf; --note:#f3f1ea; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#171d1c; --paper:#1f2726; --ink:#ebeee9; --ink-2:#a5b2ad; --line:#36423f; --accent:#6fc3ad; --accent-soft:#1b3630; --gold:#e0b35c; --gold-soft:#3a3020; --note:#262e2c; } }
+  :root[data-theme="dark"] { --bg:#171d1c; --paper:#1f2726; --ink:#ebeee9; --ink-2:#a5b2ad; --line:#36423f; --accent:#6fc3ad; --accent-soft:#1b3630; --gold:#e0b35c; --gold-soft:#3a3020; --note:#262e2c; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:"Noto Sans JP","Hiragino Sans",system-ui,sans-serif; font-size:16.5px; line-height:1.85; }
+  a { color:var(--accent); text-underline-offset:3px; }
+  a:focus-visible, summary:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  header { padding:52px 20px 32px; border-bottom:1px solid var(--line); background:var(--paper); }
+  .wrap { max-width:720px; margin:0 auto; }
+  .eyebrow { color:var(--gold); font-size:13px; letter-spacing:.14em; font-weight:700; }
+  h1 { font-family:"Shippori Mincho","Hiragino Mincho ProN",serif; font-size:clamp(28px,5vw,38px); line-height:1.3; margin:10px 0 12px; text-wrap:balance; }
+  .lead { font-size:17.5px; color:var(--ink-2); margin:0; }
+  main { padding:12px 20px 80px; }
+  h2 { font-family:"Shippori Mincho",serif; font-size:24px; margin:48px 0 8px; padding-top:16px; border-top:1px solid var(--line); }
+  h2 small { display:block; font-family:"Noto Sans JP",sans-serif; font-size:13px; color:var(--gold); letter-spacing:.12em; font-weight:700; margin-bottom:4px; }
+  p { margin:10px 0; max-width:42em; }
+  .tw { overflow-x:auto; border:1px solid var(--line); border-radius:12px; margin:14px 0; background:var(--paper); }
+  table { border-collapse:collapse; width:100%; font-size:15px; }
+  th, td { text-align:left; padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { background:var(--accent-soft); white-space:nowrap; }
+  tr:last-child td { border-bottom:0; }
+  .step { background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:16px 18px; margin:14px 0; }
+  .step h3 { margin:0 0 6px; font-size:17px; display:flex; gap:10px; align-items:baseline; }
+  .num { font-family:"Shippori Mincho",serif; color:var(--gold); font-size:14px; letter-spacing:.1em; }
+  .do { background:var(--accent-soft); border-radius:10px; padding:8px 14px; margin:8px 0 0; font-size:15px; }
+  .do b { color:var(--accent); }
+  details { background:var(--note); border-radius:10px; padding:8px 14px; margin:8px 0 0; font-size:15px; }
+  summary { cursor:pointer; font-weight:500; list-style:none; }
+  summary::before { content:"＋ "; color:var(--gold); font-weight:700; } details[open] summary::before { content:"－ "; }
+  ul { padding-left:22px; } li { margin:4px 0; }
+  .rule { border-left:4px solid var(--gold); padding:6px 16px; margin:12px 0; background:var(--gold-soft); border-radius:0 10px 10px 0; }
+  .foot { margin-top:48px; padding-top:16px; border-top:1px solid var(--line); color:var(--ink-2); font-size:14px; }
+  .promptbox { border:1px solid var(--line); border-radius:12px; background:var(--paper); overflow:hidden; margin:14px 0; }
+  .promptbar { display:flex; justify-content:space-between; align-items:center; padding:8px 14px; background:var(--accent-soft); font-size:14px; font-weight:700; }
+  .promptbar button { font:inherit; font-size:14px; font-weight:700; background:var(--accent); color:#fff; border:0; border-radius:8px; padding:6px 14px; min-height:36px; cursor:pointer; }
+  .promptbar button:focus-visible { outline:3px solid var(--gold); outline-offset:2px; }
+  pre { margin:0; padding:16px; overflow-x:auto; font-family:"Noto Sans JP","Hiragino Sans",system-ui,sans-serif; font-size:14.5px; line-height:1.75; white-space:pre-wrap; word-break:break-word; }
+</style>
+
+<header><div class="wrap">
+  <div class="eyebrow">English Lab ― 作り方の案内　版 001（2026-10-28）</div>
+  <h1>自分専用の英語学習アプリを、<br>AI と作る</h1>
+  <p class="lead">自分の仕事に関わる海外の動画や記事を集め、そこから英語を学ぶ道具を、プログラムを一行も書かずに作りました。AI（Claude）に日本語で頼み続けただけです。何をしてくれるアプリか、何を使ったか、どの順番で頼んだかを、必要な分だけ書きます。</p>
+  <p class="from" style="margin-top:14px;font-size:14px;color:var(--ink-2)">私は歯科医師なので、例は「学会」と「論文」になっています。アパレル・飲食・小売・不動産、どんな仕事でも同じ作りで動きます。海外の展示会・商談会・交流会・コンテスト、そして YouTube にあふれているその分野の動画が、そのまま教材になります。</p>
+</div></header>
+
+<main class="wrap">
+
+  <h2><small>1</small>何をしてくれるか</h2>
+  <div class="tw"><table>
+    <tr><th>部品</th><th>何をするか</th><th>自分がすること</th></tr>
+    <tr><td>集める</td><td>関心分野を登録しておくと、毎週日曜の夜に YouTube の動画と、その分野の記事や論文の新着を AI が探して採点し、合格したものだけ週報にする</td><td>関心分野を話す</td></tr>
+    <tr><td>抜き出す</td><td>合格した動画の字幕・記事の要旨から、現場で実際に口にする英文と単語を作る。和訳と発音記号つき</td><td>「単語帳に入れる」を押す</td></tr>
+    <tr><td>練習する</td><td>単語ドリル・シャドーイング（発音を点数で評価）・忘れたころに出る復習・車で聞く音声</td><td>毎日 10 分</td></tr>
+    <tr><td>話す</td><td>自分の場面（学会の質疑応答・展示会のブース・商談・交流会など）を AI 相手に声でロールプレイ。詰まったら日本語で言ってよく、「こう言えばよかった」が単語帳に入る</td><td>話す</td></tr>
+  </table></div>
+  <p>「完成」ではなく、毎週少しずつ育っています。4月に始めて、いまが 7 か月目です。</p>
+
+  <h2><small>2</small>使ったもの</h2>
+  <div class="tw"><table>
+    <tr><th>役目</th><th>道具</th><th>ひとこと</th></tr>
+    <tr><td>話し相手</td><td><a href="https://claude.ai" target="_blank" rel="noopener">Claude</a></td><td>ブラウザとスマホのアプリ。<strong>有料プラン（月 20〜200 ドル）が要ります</strong>。無料プランでは次の Claude Code が使えません</td></tr>
+    <tr><td>手を動かす係</td><td><a href="https://claude.com/product/claude-code" target="_blank" rel="noopener">Claude Code</a></td><td>自分のパソコンの中でアプリを組み、置き、直す。同じ契約で使える。<strong>Claude のデスクトップアプリ（Mac・Windows）に入っている</strong>ので、黒い画面を開く必要はない</td></tr>
+    <tr><td>置き場所</td><td><a href="https://vercel.com/" target="_blank" rel="noopener">Vercel</a>・<a href="https://supabase.com/" target="_blank" rel="noopener">Supabase</a>・<a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></td><td>無料枠。設定は全部 AI がやり、自分はログインだけ</td></tr>
+    <tr><td>AI の部品</td><td>OpenAI（会話・講評・読み上げ）・Azure（発音の点数）</td><td>使った分だけ。<strong>Claude の契約とは別払い</strong>で、最初に前払い（OpenAI）とカード登録が要る。指示文は OpenAI と Azure の 2 つに絞ってある</td></tr>
+  </table></div>
+
+  <h3 style="margin-top:22px">持ち物が違っても、できます</h3>
+  <p>パソコンとスマホが 1 台ずつあれば足ります。<strong>この文書は Mac と iPhone で進めた記録なので、同じ組み合わせがいちばんそのまま使えます。</strong>Windows や Android でもできます。やり方が少し変わる所は、Claude Code に「私は Windows です」「スマホは Android です」と伝え、<strong>ご自身で Claude Code に聞きながら</strong>進めてください。たとえば次の 2 点です。</p>
+  <ul>
+    <li>Windows：週 1 回の自動実行を、Mac の予約機能ではなく「タスク スケジューラ」で組む</li>
+    <li>Android：音声入力の癖が iPhone と違う（むしろ素直で、手間は少ない）</li>
+  </ul>
+
+  <h2><small>3</small>どの順番で頼んだか</h2>
+
+  <div class="step"><h3><span class="num">1</span>まず文章で試す（1 日目）</h3>
+    <p>Claude に「自分の仕事で使う英語表現を 20 個」と頼む。アプリの前に、AI が自分の分野を扱えるかを確かめる。</p>
+    <div class="do"><b>頼み方：</b>「私は〔仕事：例 歯科医師／アパレルのバイヤー／飲食店の経営者〕です。〔場面：例 国際学会の質疑応答／海外の展示会での商談／外国人のお客様への接客〕で使う表現を、私の実際の仕事に合わせて作って」</div>
+  </div>
+
+  <div class="step"><h3><span class="num">2</span>設計書を書かせる（1 週目）</h3>
+    <p>いきなり作らせない。「自分だけが使う英語学習アプリの設計書を書いて」と頼み、読んで「ここは要らない」「これが欲しい」を返す。私の設計書は、学会・実務・私的・診療の 4 分野で単語を色分けする、という一点から始まった。</p>
+    <div class="do"><b>頼み方：</b>「設計書を書いて。私が読めるように、専門用語は使わないで」</div>
+  </div>
+
+  <div class="step"><h3><span class="num">3</span>Claude Code に組ませる（2〜4 週目）</h3>
+    <p>Claude のデスクトップアプリを入れて「Code」のタブを開き、設計書を渡して「作って」。動いたらスマホで触り、「ここが変」と言う。これを繰り返す。自分がしたのは Vercel・Supabase・GitHub への<strong>ログインだけ</strong>。</p>
+    <div class="do"><b>頼み方：</b>「設計書どおりに作って、スマホで使える形で公開して。本番に出す前に必ず私に確認して」</div>
+    <details><summary>つまずいた所</summary>
+      <ul>
+        <li>「動きました」を信じて自分の目で見なかった → 9 日を失った。<strong>必ず実機で触る</strong></li>
+        <li>無料枠のデータベースは、しばらく触らないと眠る → AI に毎日 1 回読みに行く見張りを作らせた</li>
+        <li>YouTube の字幕は、クラウドからは取れず自宅の Mac からしか取れなかった → 収集だけ Mac で週 1 回自動実行</li>
+      </ul>
+    </details>
+  </div>
+
+  <div class="step"><h3><span class="num">4</span>育てる（2 か月目〜）</h3>
+    <p>使って「言えなかった」「字幕が無い」と感じたことを、そのまま AI に言う。会話練習で詰まった表現が自動で単語帳に入る仕組みも、論文から英文を作る仕組みも、全部あとから足したもの。</p>
+    <div class="do"><b>頼み方：</b>「きのうの練習で言えなかった表現を、自動で単語帳に入るようにして」</div>
+  </div>
+
+  <h2><small>4</small>遠回りしない 3 つ</h2>
+  <div class="rule"><b>1．「できる？」ではなく「やって」と言う。</b>説明ではなく、結果が返ってくる。</div>
+  <div class="rule"><b>2．自分の手を使うのは、ログイン・支払い・実機で試す・最終判断の 4 つだけ。</b>それ以外は「あなたが先に試して」。</div>
+  <div class="rule"><b>3．本番に出す・お金を払う判断は、毎回自分が押す。</b>ここを預けなかったことが、安心して任せられた理由。</div>
+
+  <h2><small>5</small>お金</h2>
+  <p>Claude の有料プラン（月 20〜200 ドル）。アプリの AI 部品は使った分だけで月数百円ですが、<strong>最初に OpenAI の前払い（数ドルから）と、Azure のカード登録</strong>が要ります。置き場所は無料枠で 0 円。Pro プランには「数時間使うと、○時まで休み」という上限があり、出ても壊れていません。待てば戻ります。</p>
+
+  <h2><small>6</small>Claude Code にそのまま貼る指示文（汎用版）</h2>
+  <p>「設計書を書いて」から始めると途中で止まりがちなので、<strong>枠組みのヒントを先に渡す</strong>ための文です。Claude Code を入れたら、最初の会話にこれを貼ってください。<strong>Mac でも Windows でも、iPhone でも Android でも、同じ文で足ります。</strong>パソコンの種類は AI が自分で見分け、スマホの種類だけ最初に 1 回聞いてきます。〔　〕の中だけ自分のことに書き換えます。</p>
+  <div class="promptbox">
+    <div class="promptbar"><span>指示文（コピーして貼る）</span><button type="button" id="copyBtn">コピー</button></div>
+<pre id="promptText">あなたは、プログラムを書けない私（〔仕事：例 歯科医師／アパレルのバイヤー／飲食店の経営者〕・扱う分野は〔　〕）の
+「自分専用の英語学習アプリ」を、設計から公開まで一緒に作る相棒です。
+私はコンピュータの初学者です。専門用語を使わず、番号つきで 1 回に 1 つだけ聞いてください。
+
+■ 最初に、この 3 つだけ私に聞いてください（1 つずつ）
+1. 仕事の分野と、英語を使う場面（学会・展示会・商談・接客・交流会など）
+2. スマホは iPhone か Android か（パソコンの種類は聞かず、あなたが確かめる）
+3. AI の部品に月いくらまで払ってよいか（目安は月 500〜1,500 円）
+聞き終わったら、設計書の目次を出してください。
+
+■ 私の環境（あなたが見分ける）
+- パソコンが Mac か Windows かはあなたが確かめる。アプリの置き場所は iCloud Drive や OneDrive の外（例：ホーム直下の Projects）
+- Mac：週 1 回の自動実行は launchd。Windows：タスク スケジューラ、コマンドは PowerShell、文字コードは UTF-8 を明示。
+  どちらも「その時刻にパソコンが起きていないと動かない」ことを設計書に書く
+- iPhone：Safari の音声認識は continuous=false で、無音をこちらの時計で区切る。Android：Chrome は continuous=true が使える
+- どれに当たっても、私への説明は「スマホ」「パソコン」の言葉で書き、違いは内側で吸収する
+
+■ 作りたいもの（1 つずつ順に作り、各段で私がスマホで触って確かめます）
+0. 準備：公開の置き場所（GitHub・Vercel・Supabase）へのログインを、段階 1 の前にまとめて済ませる
+1. 単語帳とドリル：英文・和訳・発音記号・例文。忘れたころに出てくる復習つき
+2. 動画から学ぶ：YouTube の URL を入れると字幕を取り、単語と言い回しを拾って単語帳へ
+3. 話す練習：〔例：学会の質疑応答／展示会での商談／お客様への説明〕の場面で AI と声でロールプレイ。
+   言えなくて日本語で言った所は「こう言えばよかった」として単語帳に入る
+4. 自動で集める：関心分野〔例：　〕の新しい YouTube 動画と記事（学術分野なら論文）を週 1 回探して採点し、合格だけ一覧にする。
+   どのチャンネル・サイトを見るかは、設計のときに私に 3 つ挙げてもらう
+
+■ 進め方の約束
+- いきなり作らない。まず設計書を私が読める言葉で書き、私の「はい」を待つ
+- 1 段できるたびに、私がスマホで開ける URL を出し、「どこを押して何が見えれば成功か」を書く
+- 自分で調べれば分かること（パソコンの種類・入っている道具・エラーの原因）は自分で調べ、私に聞かない。
+  私の判断が要るときだけ、おすすめを 1 つ付けて 1 回に 1 つ聞く
+- 技術の選択はあなたが決め、「こう決めました。理由は〜」と 1 行で報告する
+- 「動きました」とだけ言わない。何件・いつ・どの画面で確かめたかを添える
+- 本番に出す・お金がかかる・消す・外へ送る操作は、先に文面と金額を見せて私の「はい」を待つ
+- 私がやるのは、ログイン・支払い・スマホで試す・最終判断の 4 つだけ。それ以外はあなたが先に試す
+- 有料サービスは無料枠か前払いで始める。サービス側に月の上限の設定があれば、その画面への道順を私に案内する
+- 患者さん・お客様の情報は一切入れない前提で設計する
+- プロジェクトの中に「進み具合.md」を置き、段が終わるたびに「どこまで済んだ・次に私がすること」を書き直す。
+  新しい会話で「続きをやって」と言われたら、まずそれを読む
+
+■ 私が止まったときの合図（この言葉が来たら、こう動く）
+- 「続けて」→ 止まっていた所から再開する
+- 「おすすめで」→ あなたのおすすめで決めて進む
+- 赤い字やエラーを貼って「直して」→ 原因を 1 行で言い、直して、確かめてから報告する
+- 「いまどこ？」→ 進み具合.md を読み、「ここまで済んだ／次に私がすること 1 つ」を答える
+- 「何も見えない」→ URL と、押す場所と、見えるはずの画面を、もう一度書く
+- 許可を求める画面で私が困っていたら、「Yes（はい）を選んでください。危ないものは私が先に止めます」と伝える
+- ログインや鍵の発行が要る場面では、最初に「ここは私の手が要ります。正常です」と言い、
+  開くページの直リンク・押すボタン・終わったら何と言えばよいかを書く
+
+■ 鍵の扱い
+- 鍵や合言葉は .env.local に置き、画面にも会話にも出さない
+- ログインで取れる鍵（Vercel・Supabase・GitHub）は、それぞれの道具のログインであなたが取りに行く。私に貼らせない
+- 貼るしかない鍵（OpenAI・Azure）は、あなたがメモ帳の窓を開き、私がそこに貼って保存する。会話には貼らせない
+
+■ 技術のヒント（私は理解しなくてよい。あなたの判断に使う）
+- 形：スマホのホーム画面に置いて使う Web アプリ（Next.js）。ストアには出さない。iPhone でも Android でも同じもの
+- 置き場所：GitHub（保管庫）＋ Vercel（公開）＋ Supabase（データ）。いずれも無料枠から
+- AI の部品は少なく：会話・講評・採点・読み上げは OpenAI の 1 つで。発音の点数は Azure Speech（無料枠）。
+  動画の検索は YouTube Data API（無料枠）。それ以外は増やさない
+- 音声入力はブラウザの音声認識。読み上げは複数の音声サービスを切り替えられる作り
+- ログインは 1 人用のいちばん簡単な方法（合言葉か、メールのワンタイムコード）。Google ログインは使わない
+- YouTube の字幕はクラウドから取れないことが多い。取得は私のパソコンで行い、データベースへ直接入れる。
+  「取れなかった」と「字幕が無い」を区別して記録する
+- 週 1 回の自動収集はパソコンの予約機能で動かし、動いた記録（日時・件数）を毎回残す
+- 無料枠のデータベースは放置すると眠る。毎日 1 回読みに行く見張りを最初から入れる</pre>
+  </div>
+  <p style="font-size:14px;color:var(--ink-2)">★ これは「枠組み」です。私のアプリと同じものにはなりませんし、ならなくて構いません。相手の専門・端末・予算に合わせて、AI が設計書を変えてきます。</p>
+  <p>それでも、必ず何度か止まります。大半は「壊れた」のではなく「人の手が要る場面」です。止まったときの見分け方と、言う言葉を 1 枚にまとめました。</p>
+  <p class="do" style="font-size:16px"><b>困ったときの手引き → </b><a href="komatta.html" target="_blank" rel="noopener">止まったとき、壊れたと思ったときに開くページ</a></p>
+
+  <h2><small>7</small>改訂の記録</h2>
+  <p>このページは育てていきます。質問をいただいたら、答えは個別には返さず、ここに書き足します。版の数字が上がっていたら、何かが足されたか直ったということです。</p>
+  <div class="tw"><table>
+    <tr><th>版</th><th>日付</th><th>変えたこと</th></tr>
+    <tr><td>001</td><td>2026-10-28</td><td>初版。作り方・指示文・困ったときの手引き・1 枚案内の 3 ページ</td></tr>
+  </table></div>
+
+  <p class="foot">細かい手順は <a href="https://code.claude.com/docs/ja/overview" target="_blank" rel="noopener">Claude Code の公式ドキュメント（日本語）</a>と <a href="https://support.claude.com/" target="_blank" rel="noopener">ヘルプセンター</a>に。やってみて分からなかった所を教えていただければ、書き足します。患者さんの情報は、この文書にも AI にも入れていません。</p>
+</main>
+<script>
+  (function () {
+    var btn = document.getElementById('copyBtn');
+    var pre = document.getElementById('promptText');
+    if (!btn || !pre) return;
+    btn.addEventListener('click', function () {
+      var text = pre.textContent;
+      var done = function () { btn.textContent = 'コピーしました'; setTimeout(function () { btn.textContent = 'コピー'; }, 2500); };
+      var fail = function () { btn.textContent = '長押しして選択してください'; setTimeout(function () { btn.textContent = 'コピー'; }, 3500); };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fail);
+      else fail();
+    });
+  })();
+</script>
