@@ -1,0 +1,172 @@
+#!/bin/bash
+# コミット前の見張り（2026-11-12 統合ハブ指示書・先生のご承認「採用」）
+# 着想: 大川内秀幸先生の okawachi0916/chairside-view（MIT License）。考え方を借り、中身はこちらで書いた。
+#
+# コミットに次が混ざっていたら止めて、理由を日本語で出す:
+#   鍵・パスワード（.env 系、*.pem *.key、sk-ant- / ghp_ / github_pat_ / AKIA 等で始まる文字列）
+#   音声・動画（wav mp3 m4a aac flac ogg webm mp4 mov）
+#   位置情報（GPS）が残った写真（jpg jpeg heic png）
+#   医用画像（*.dcm）
+#   20MB を超えるファイル
+#
+# 入れ方: リポジトリ直下の .githooks/pre-commit に置き、`git config core.hooksPath .githooks`
+# 検査するのは「ステージされた中身」（git show :path）。作業ツリーの別の版ではない。
+set -u
+PY=""
+for c in /usr/bin/python3 python3; do
+  if command -v "$c" >/dev/null 2>&1; then PY="$c"; break; fi
+done
+if [ -z "$PY" ]; then
+  echo "コミット前の見張り: python3 が見つからないため検査できません。止めます。" >&2
+  exit 1
+fi
+
+# ★ 対象のファイル一覧は Python の中で git から取る（パイプと heredoc が stdin を奪い合うため）
+"$PY" -I - <<'PYEOF'
+import re
+import struct
+import subprocess
+import sys
+
+MAX_BYTES = 20 * 1024 * 1024
+AUDIO_VIDEO = {"wav", "mp3", "m4a", "aac", "flac", "ogg", "webm", "mp4", "mov"}
+PHOTO = {"jpg", "jpeg", "heic", "png"}
+KEY_EXT = {"pem", "key"}
+SECRET_PATTERNS = [
+    ("Anthropic の鍵", re.compile(rb"sk-ant-[A-Za-z0-9_\-]{8,}")),
+    ("GitHub のトークン", re.compile(rb"\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9]{20,}")),
+    ("GitHub の細粒度トークン", re.compile(rb"github_pat_[A-Za-z0-9_]{20,}")),
+    ("AWS のアクセスキー", re.compile(rb"\bAKIA[0-9A-Z]{16}\b")),
+    ("OpenAI の鍵", re.compile(rb"\bsk-(?:proj-)?[A-Za-z0-9_\-]{20,}")),
+    ("Google の API キー", re.compile(rb"\bAIza[0-9A-Za-z_\-]{35}\b")),
+    ("Slack のトークン", re.compile(rb"\bxox[abprs]-[A-Za-z0-9\-]{10,}")),
+    ("秘密鍵のブロック", re.compile(rb"-----BEGIN (?:RSA |EC |DSA |OPENSSH |PGP )?PRIVATE KEY")),
+]
+ENV_ALLOWED_SUFFIX = (".example", ".sample", ".template")
+
+
+def staged_bytes(path: str) -> bytes:
+    return subprocess.run(["git", "show", f":{path}"], capture_output=True, check=False).stdout
+
+
+def staged_size(path: str) -> int:
+    out = subprocess.run(["git", "cat-file", "-s", f":{path}"], capture_output=True, text=True, check=False).stdout
+    return int(out.strip() or 0)
+
+
+def tiff_has_gps(tiff: bytes) -> bool:
+    """TIFF 構造（Exif の中身）の IFD0 に GPSInfo（0x8825）があるか。"""
+    if len(tiff) < 8:
+        return False
+    if tiff[:2] == b"MM":
+        e = ">"
+    elif tiff[:2] == b"II":
+        e = "<"
+    else:
+        return False
+    try:
+        if struct.unpack(e + "H", tiff[2:4])[0] != 42:
+            return False
+        off = struct.unpack(e + "I", tiff[4:8])[0]
+        for _ in range(8):  # IFD の連鎖は数回まで
+            if off <= 0 or off + 2 > len(tiff):
+                return False
+            n = struct.unpack(e + "H", tiff[off:off + 2])[0]
+            base = off + 2
+            for i in range(n):
+                ent = base + i * 12
+                if ent + 12 > len(tiff):
+                    return False
+                tag = struct.unpack(e + "H", tiff[ent:ent + 2])[0]
+                if tag == 0x8825:
+                    return True
+            nxt = base + n * 12
+            if nxt + 4 > len(tiff):
+                return False
+            off = struct.unpack(e + "I", tiff[nxt:nxt + 4])[0]
+    except struct.error:
+        return False
+    return False
+
+
+def photo_has_gps(data: bytes) -> bool:
+    # JPEG(APP1)・HEIC(Exif box)・PNG(eXIf chunk) のどれでも、"Exif\0\0" の後に TIFF が続く
+    start = 0
+    while True:
+        i = data.find(b"Exif\x00\x00", start)
+        if i < 0:
+            break
+        if tiff_has_gps(data[i + 6:i + 6 + 1_000_000]):
+            return True
+        start = i + 6
+    # PNG の eXIf チャンクは TIFF が直接入る
+    j = data.find(b"eXIf")
+    if j >= 0 and tiff_has_gps(data[j + 4:j + 4 + 1_000_000]):
+        return True
+    # 保険: Pillow があれば正式に読む
+    try:
+        from io import BytesIO
+        from PIL import Image  # type: ignore
+
+        with Image.open(BytesIO(data)) as im:
+            ex = im.getexif()
+            if 0x8825 in ex and ex.get_ifd(0x8825):
+                return True
+    except Exception:
+        pass
+    return False
+
+
+raw = subprocess.run(["git", "diff", "--cached", "--name-only", "--diff-filter=ACMR", "-z"], capture_output=True, check=False).stdout
+paths = [p.decode("utf-8", "surrogateescape") for p in raw.split(b"\0") if p]
+problems: list[tuple[str, str]] = []
+
+for p in paths:
+    name = p.rsplit("/", 1)[-1]
+    low = name.lower()
+    ext = low.rsplit(".", 1)[-1] if "." in low else ""
+
+    if low.startswith(".env") and not low.endswith(ENV_ALLOWED_SUFFIX):
+        problems.append((p, "鍵や合言葉を入れる .env 系のファイル"))
+        continue
+    if ext in KEY_EXT:
+        problems.append((p, "秘密鍵のファイル（*.pem / *.key）"))
+        continue
+    if ext == "dcm":
+        problems.append((p, "医用画像（DICOM）"))
+        continue
+    if ext in AUDIO_VIDEO:
+        problems.append((p, "音声・動画のファイル"))
+        continue
+
+    size = staged_size(p)
+    if size > MAX_BYTES:
+        problems.append((p, f"20MB を超えるファイル（{size / 1048576:.1f} MB）"))
+        continue
+
+    data = staged_bytes(p)
+    if ext in PHOTO:
+        if photo_has_gps(data):
+            problems.append((p, "位置情報（GPS）が残った写真"))
+        continue
+
+    # それ以外は中身に鍵が無いか（バイナリらしいものは先頭だけ見る）
+    sample = data if b"\0" not in data[:8192] else data[:65536]
+    for label, rx in SECRET_PATTERNS:
+        if rx.search(sample):
+            problems.append((p, f"{label}らしい文字列"))
+            break
+
+if problems:
+    print("")
+    print("■ コミット前の見張り: コミットを止めました。次のものが混ざっています。")
+    for p, why in problems:
+        print(f"  ✗ {p}")
+        print(f"      理由: {why}")
+    print("")
+    print("  対処: そのファイルをコミットから外す（git restore --staged <ファイル>）か、")
+    print("        鍵なら .env.local へ移し、写真なら位置情報を落としてから、もう一度コミットしてください。")
+    print("")
+    sys.exit(1)
+sys.exit(0)
+PYEOF
